@@ -43,7 +43,10 @@ def main(wf):
     Entrez.email = "noreply@danielecook.com"
 
     # See if user is searching for a pub or has selected one.
-    log.debug(wf.args[0:4])
+    if len(args) < 3:
+        wf.add_item("Enter at least 3 characters", icon="info.png")
+        wf.send_feedback()
+
     if args.startswith("PMID") == False:
         pubs = wf.cached_data(slug(args), get_search_results, max_age=100000)
         if len(pubs) > 0:
